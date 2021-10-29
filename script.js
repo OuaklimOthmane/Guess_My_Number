@@ -1,44 +1,54 @@
 "use strict";
-// console.log(document.querySelector(".message").textContent);
-// console.log(document.querySelector(".message").value);
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let message = document.querySelector(".message");
-
 let number = document.querySelector(".number");
+let body = document.querySelector("body");
+let guess = document.querySelector(".guess");
+let highScoreElement = document.querySelector(".highscore");
+let scoreElement = document.querySelector(".score");
 let highscore = 0;
 let score = 20;
-// let g = Number(document.querySelector(".guess").value);
 console.log(secretNumber);
-document.querySelector(".guess").textContent = "";
 
 document.querySelector(".check").addEventListener("click", function () {
-  if (score > 1) {
-    console.log(Number(document.querySelector(".guess").value));
-    switch (true) {
-      case Number(document.querySelector(".guess").value) > secretNumber:
-        message.textContent = "↗ Too high";
-        score--;
-        document.querySelector(".score").textContent = score;
-        break;
-
-      case Number(document.querySelector(".guess").value) < secretNumber:
-        message.textContent = "↘ Too low";
-        score--;
-        break;
-
-      case Number(document.querySelector(".guess").value) === secretNumber:
-        message.textContent = "✅ You Win the game";
-        if (score > highscore) {
-          document.querySelector(".highscore").textContent = score;
-        }
-        break;
-
-      case "":
-        console.log("makinsh");
-        message.textContent = "Enter a Number !!";
-    }
+  if (!guess.value) {
+    message.textContent = "🚫Enter a Number !!";
   } else {
-    message.textContent = "❌ You lose the game";
+    if (score > 1) {
+      switch (true) {
+        case Number(guess.value) !== secretNumber:
+          score--;
+          scoreElement.textContent = score;
+          message.textContent =
+            guess.value > secretNumber ? "↗ Too high" : "↘ Too low";
+          break;
+
+        case Number(guess.value) === secretNumber:
+          message.textContent = "✅ You Win the game";
+          body.style.backgroundColor = "#60b347";
+          number.textContent = secretNumber;
+          number.style.width = "30rem";
+          if (score > highscore) {
+            highScoreElement.textContent = score;
+          }
+          break;
+      }
+    } else {
+      message.textContent = "❌ You lose the game";
+      body.style.backgroundColor = "orangered";
+      scoreElement.textContent = 0;
+    }
   }
+});
+
+document.querySelector(".again").addEventListener("click", function () {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  guess.value = "";
+  body.style.backgroundColor = "#222";
+  number.style.width = "15rem";
+  highScoreElement.textContent = 0;
+  scoreElement.textContent = 20;
+  number.textContent = "?";
+  message.textContent = "Start guessing...";
 });
