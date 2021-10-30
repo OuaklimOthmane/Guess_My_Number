@@ -30,7 +30,8 @@ document.querySelector(".check").addEventListener("click", function () {
           number.textContent = secretNumber;
           number.style.width = "30rem";
           if (score > highscore) {
-            highScoreElement.textContent = score;
+            highscore = score;
+            highScoreElement.textContent = highscore;
           }
           break;
       }
@@ -44,11 +45,13 @@ document.querySelector(".check").addEventListener("click", function () {
 
 document.querySelector(".again").addEventListener("click", function () {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
+  console.log(secretNumber);
   guess.value = "";
   body.style.backgroundColor = "#222";
   number.style.width = "15rem";
-  highScoreElement.textContent = 0;
-  scoreElement.textContent = 20;
+  highScoreElement.textContent = highscore;
+  score = 20;
+  scoreElement.textContent = score;
   number.textContent = "?";
   message.textContent = "Start guessing...";
 });
